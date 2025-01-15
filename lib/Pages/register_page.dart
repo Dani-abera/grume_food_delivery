@@ -4,30 +4,14 @@ import 'package:grume_food_delivery/component/my_button.dart';
 import 'package:grume_food_delivery/component/my_textfield.dart';
 import 'package:provider/provider.dart';
 
-import 'home_page.dart';
-
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatelessWidget {
   final Function()? onTap;
-  const LoginPage({
-    super.key,
-    required this.onTap,
-  });
+  RegisterPage({super.key, required this.onTap});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerPassword = TextEditingController();
-
   final TextEditingController _controllerEmail = TextEditingController();
-
-  void login() {
-    // Fill out authentication here.....
-
-    // navigate to home page
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
-  }
+  final TextEditingController _controllerConfirmPassword =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             //logo
             Icon(
-              Icons.lock_open_rounded,
+              Icons.account_box_rounded,
               size: 100,
               // color: Provider.of<ThemeProvider>(context)
               //     .themeData
@@ -48,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             //message
 
-            Text('Grume Food Delivery App',
+            Text('Let\'Create Account',
                 style: Theme.of(context).textTheme.displayLarge),
 
             // email textField
@@ -65,30 +49,36 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: 'Password',
                 prefixIcon: Icons.password,
                 controller: _controllerPassword),
+
+            //conform password textField
+            MyTextfield(
+                hintText: 'Confirm Password',
+                prefixIcon: Icons.confirmation_num,
+                controller: _controllerConfirmPassword),
             SizedBox(
               height: 25,
             ),
 
             // submit Button
-            MyButton(text: 'LogIn', onPressed: login),
+            MyButton(text: 'Sign Up', onPressed: () {}),
             SizedBox(
               height: 25,
             ),
 
-            // not a member sign up
+            // Already a member?
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Is Not A Member?  ',
+                  'Already a member?  ',
                   style: TextStyle(
                     fontFamily: 'RobotoCondensed',
                   ),
                 ),
                 GestureDetector(
-                  onTap: widget.onTap,
+                  onTap: onTap,
                   child: Text(
-                    'Register Now!',
+                    'LogIn Now!',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 )

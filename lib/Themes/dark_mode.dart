@@ -15,7 +15,7 @@ ThemeData darkTheme(BuildContext context) {
       onBackground: Colors.white,
       onSurface: Colors.white70,
     ),
-    fontFamily: 'RobotoCondensed',
+    fontFamily: 'RubikVinyl',
     textTheme: TextTheme(
       displayLarge: TextStyle(
         fontSize: ScreenSize.responsiveText(7),
@@ -25,12 +25,12 @@ ThemeData darkTheme(BuildContext context) {
       ),
       bodyLarge: TextStyle(
         fontSize: 22,
-        fontFamily: 'RubikVinyl',
+        fontFamily: 'Permanent_Marker',
         color: Colors.white,
       ),
       bodyMedium: TextStyle(
         fontSize: 16,
-        fontFamily: 'Permanent_Marker',
+        fontFamily: 'RobotoCondensed',
         color: Colors.grey[400],
       ),
     ),
