@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grume_food_delivery/Pages/cart_page.dart';
 import 'package:grume_food_delivery/Themes/screen_size.dart';
 
 class MySilverAppBar extends StatelessWidget {
@@ -17,7 +18,11 @@ class MySilverAppBar extends StatelessWidget {
       pinned: true,
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            // go to Cart Page
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => CartPage()));
+          },
           icon: Icon(Icons.shopping_cart),
         ),
       ],

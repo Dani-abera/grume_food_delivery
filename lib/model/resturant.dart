@@ -392,80 +392,83 @@ class Restaurant extends ChangeNotifier {
       ],
     ),
   ];
+
+  final List<CartItem> _cart = [];
   /*
 
   Getters
 
    */
   List<Food> get menu => _menu;
+  List<CartItem> get cart => _cart;
 
   /*
    Operation
 
    */
-  final List<CartItem> cart = [];
 
   // Add to Cart
   void addToCart(Food food, List<Addon> selectedAddon) {
-    CartItem? cartItems = cart.firstWhereOrNull((item) {
-      // check if the food item is the same
+    CartItem? cartItems = _cart.firstWhereOrNull((item) {
+      // Check if the food item is the same
       bool isSameFood = item.food == food;
-      // check if the list of addons are the same
+      // Check if the list of addons is the same
       bool isSameAddon =
-          ListEquality().equals(item.selectedAddons, selectedAddon);
+          const ListEquality().equals(item.selectedAddons, selectedAddon);
       return isSameAddon && isSameFood;
     });
-    // if the item already exist increase the quantity
+
+    // If the item already exists, increase the quantity
     if (cartItems != null) {
       cartItems.quantity++;
     } else {
-      cart.add(CartItem(
-          selectedAddons: selectedAddon,
-          food: food,
-          quantity: cartItems!.quantity));
+      _cart.add(CartItem(
+        selectedAddons: selectedAddon,
+        food: food,
+        quantity: 1, // Default quantity for new items
+      ));
     }
     notifyListeners();
   }
 
-  // remove from Cart
-  void removeFromCart(CartItem cartItems) {
-    int cartIndex = cart.indexOf(cartItems);
+  // Remove from Cart
+  void removeFromCart(CartItem cartItem) {
+    int cartIndex = _cart.indexOf(cartItem);
     if (cartIndex != -1) {
-      if (cart[cartIndex].quantity > 1) {
-        cart[cartIndex].quantity--;
+      if (_cart[cartIndex].quantity > 1) {
+        _cart[cartIndex].quantity--;
       } else {
-        cart.removeAt(cartIndex);
+        _cart.removeAt(cartIndex);
       }
     }
     notifyListeners();
   }
 
-  // get total price of cart
+  // Get total price of cart
   double getTotalPriceOfCart() {
     double total = 0.0;
-    for (CartItem cartItems in cart) {
-      double itemTotal = cartItems.food.price;
-      for (Addon addon in cartItems.selectedAddons) {
+    for (CartItem cartItem in _cart) {
+      double itemTotal = cartItem.food.price;
+      for (Addon addon in cartItem.selectedAddons) {
         itemTotal += addon.price;
       }
-      total += itemTotal * cartItems.quantity;
+      total += itemTotal * cartItem.quantity;
     }
     return total;
   }
 
-  // get total number of item in cart
-
+  // Get total number of items in cart
   int getTotalItemCount() {
     int totalItemCount = 0;
-    for (CartItem cartItems in cart) {
-      totalItemCount += cartItems.quantity;
+    for (CartItem cartItem in _cart) {
+      totalItemCount += cartItem.quantity;
     }
     return totalItemCount;
   }
 
   // Clear Cart
   void clearCart() {
-    cart.clear();
+    _cart.clear();
     notifyListeners();
   }
 
