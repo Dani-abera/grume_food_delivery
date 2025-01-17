@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 import 'cart_item.dart';
 import 'food.dart';
@@ -476,7 +477,43 @@ class Restaurant extends ChangeNotifier {
    Helpers
     */
 
-// generate receipts
+// generate
+  String displayReceipt() {
+    final bu = StringBuffer();
+    bu.writeln('Here is Your receipt');
+    bu.writeln();
+
+    String formattedDate =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    bu.writeln(formattedDate);
+    bu.writeln();
+    bu.writeln('--------------------');
+
+    for (final cartItem in _cart) {
+      bu.writeln(
+          "${cartItem.quantity} X ${cartItem.food.name} - ${_formatPrice(cartItem.food.price)}");
+      if (cartItem.selectedAddons.isNotEmpty) {
+        bu.writeln("AddOns ${_formatAddons(cartItem.selectedAddons)}");
+      }
+      bu.writeln();
+    }
+    bu.writeln('--------------------');
+    bu.writeln();
+    bu.writeln("Total item count: ${getTotalItemCount()}");
+    bu.writeln("Total price: ${_formatPrice(getTotalPriceOfCart())}");
+
+    return bu.toString();
+  }
+
 // format double value in to money
+  String _formatPrice(double price) {
+    return "\$${price.toStringAsFixed(2)}";
+  }
+
 // format list of Addon into string summary
+  String _formatAddons(List<Addon> addons) {
+    return addons
+        .map((addon) => "${addon.name} (${_formatPrice(addon.price)})")
+        .join(', ');
+  }
 }

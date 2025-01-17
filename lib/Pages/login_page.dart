@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grume_food_delivery/Themes/theme_provider.dart';
+import 'package:grume_food_delivery/auth/auth_service.dart';
 import 'package:grume_food_delivery/component/my_button.dart';
 import 'package:grume_food_delivery/component/my_textfield.dart';
-import 'package:provider/provider.dart';
-
-import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -22,11 +19,24 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _controllerEmail = TextEditingController();
 
-  void login() {
+  void login() async {
     // Fill out authentication here.....
 
+    final authService = AuthService();
+
+    try {
+      await authService.signInWithEmailAndPassword(
+          _controllerEmail.text, _controllerPassword.text);
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
+    }
     // navigate to home page
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+    //Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
   }
 
   @override

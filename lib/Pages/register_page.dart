@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:grume_food_delivery/Themes/theme_provider.dart';
+import 'package:grume_food_delivery/auth/login_or_register.dart';
+
 import 'package:grume_food_delivery/component/my_button.dart';
 import 'package:grume_food_delivery/component/my_textfield.dart';
-import 'package:provider/provider.dart';
+
+import '../auth/auth_service.dart';
 
 class RegisterPage extends StatelessWidget {
   final Function()? onTap;
@@ -12,6 +14,29 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerConfirmPassword =
       TextEditingController();
+  void register(BuildContext context) async {
+    final authService = AuthService();
+    if (_controllerPassword.text == _controllerConfirmPassword.text) {
+      try {
+        await authService.createUserWithEmailAndPassword(
+            _controllerEmail.text, _controllerPassword.text);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Password don\'t match'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +85,7 @@ class RegisterPage extends StatelessWidget {
             ),
 
             // submit Button
-            MyButton(text: 'Sign Up', onPressed: () {}),
+            MyButton(text: 'Sign Up', onPressed: () => register(context)),
             SizedBox(
               height: 25,
             ),

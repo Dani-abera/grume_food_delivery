@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grume_food_delivery/component/my_drawer_tile.dart';
 
 import '../Pages/setting_page.dart';
+import '../auth/auth_service.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -51,7 +52,10 @@ class MyDrawer extends StatelessWidget {
           MyDrawerTile(
               icons: Icons.logout,
               text: 'L O G O U T',
-              onTop: () => Navigator.pop(context)),
+              onTop: () {
+                final authService = AuthService();
+                authService.signOut();
+              }),
         ],
       ),
     );

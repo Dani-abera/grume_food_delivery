@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "402738571631",
+    "project_id": "grumedelivery",
+    "storage_bucket": "grumedelivery.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402738571631:android:f0562d6bbfee8ec939609a",
+        "android_client_info": {
+          "package_name": "com.example.grume_food_delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4M2Un2160oNKD4S-O8Rfzz0BHQzJmZgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

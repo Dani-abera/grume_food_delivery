@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grume_food_delivery/Pages/payment_page.dart';
+import 'package:grume_food_delivery/component/my_button.dart';
 import 'package:grume_food_delivery/component/my_cart_tile.dart';
 import 'package:grume_food_delivery/model/resturant.dart';
 import 'package:provider/provider.dart';
@@ -21,12 +23,13 @@ class CartPage extends StatelessWidget {
                 onPressed: () {
                   userCart.isEmpty
                       ? Fluttertoast.showToast(
-                          msg: 'This is a Toast message',
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          backgroundColor: Colors.black,
+                          msg: "Your Cart is Empty",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: 20.0,
                         )
                       : showDialog(
                           context: context,
@@ -56,25 +59,34 @@ class CartPage extends StatelessWidget {
                 icon: Icon(Icons.delete))
           ],
         ),
-        body: userCart.isEmpty
-            ? Center(
-                child: Text(
-                  'Your cart is empty.',
-                  style: TextStyle(fontSize: 18),
-                ),
-              )
-            : Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: userCart.length,
-                        itemBuilder: (context, index) {
-                          final cartItem = userCart[index];
-                          return MyCartTile(cartItem: cartItem);
-                        }),
-                  )
-                ],
-              ),
+        body: Column(
+          children: [
+            Expanded(
+              child: userCart.isEmpty
+                  ? Center(
+                      child: Text(
+                        'Your cart is empty.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: userCart.length,
+                      itemBuilder: (context, index) {
+                        final cartItem = userCart[index];
+                        return MyCartTile(cartItem: cartItem);
+                      }),
+            ),
+            MyButton(
+                text: 'Check Out ',
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => PaymentPage()));
+                }),
+            SizedBox(
+              height: 35,
+            )
+          ],
+        ),
       );
     });
   }

@@ -1,13 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:grume_food_delivery/Themes/dark_mode.dart';
 import 'package:grume_food_delivery/Themes/light_mode.dart';
 import 'package:grume_food_delivery/Themes/theme_provider.dart';
-import 'package:grume_food_delivery/auth/login_or_register.dart';
+import 'package:grume_food_delivery/auth/auth_gate.dart';
 import 'package:grume_food_delivery/model/resturant.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  // Ensure Flutter bindings are initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(
@@ -29,6 +39,6 @@ class MyApp extends StatelessWidget {
         theme: lightTheme(context),
         darkTheme: darkTheme(context),
         themeMode: Provider.of<ThemeProvider>(context).themeMode,
-        home: LoginOrRegister());
+        home: AuthGate());
   }
 }
